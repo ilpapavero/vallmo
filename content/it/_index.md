@@ -2,17 +2,24 @@
 title: Home
 ---
 
-{{< brick_title2 >}}
-# Associazione<br/>Il Papavero
+{{< brick_image >}}
+# Associazione <span>il papavero</span>
+
+Ripetizioni, doposcuola e laboratori a Ferrara. Siamo insegnanti, laureati e professionisti dell'educazione: aiutiamo bambini, ragazzi e adulti a studiare meglio, dalla primaria all'università.
+
+{{< callbuttons >}} <a href="mailto:associazioneilpapavero@gmail.com" class="button ghost">Scrivici un'email</a>
+
+Aperti dal lunedì al venerdì, 14:00–19:00  
+Piazza Bruno Buozzi 14, Ferrara
 
 ![](uploads/branding/logo_flower.png)
-{{< /brick_title2 >}}
+{{< /brick_image >}}
 
 
 {{< brick_image >}}
 ## Chi siamo
 
-![](uploads/photos/people.jpeg)
+![Il team de Il Papavero](uploads/photos/people.jpeg)
 
 Il Papavero è un'Associazione di Promozione Sociale senza finalità di lucro fondata da insegnanti, laureati e professionisti che si occupano di **educazione e formazione scolastica ed extrascolastica** e che offrono sostegno didattico per favorire l'apprendimento **per ogni fascia di età**.
 
@@ -79,13 +86,16 @@ Attività extrascolastiche per bambini e ragazzi (laboratori, corsi, ecc.).
 {{< brick_map >}}
 ## Contatti
 
-![](uploads/map3.png)
+![Mappa della sede in Piazza Bruno Buozzi 14, Ferrara](uploads/map3.png)
 
 [Google Maps](https://maps.app.goo.gl/FzCZKT8mwKv38Xea6)
 
 Associazione Il Papavero  
 Piazza Bruno Buozzi, 14  
-44123 Ferrara (FE)  
+44123 Ferrara (FE)
+
+[349 179 2394](tel:+393491792394)  
+[334 527 1947](tel:+393345271947)
 
 {{< contactbuttons >}}
 {{< /brick_map >}}

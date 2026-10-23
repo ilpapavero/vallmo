@@ -1,0 +1,12 @@
+logo_image: uploads/branding/logo_long.png
+logo_subtitle: جمعية للنهوض الاجتماعي
+mobile_view_width: 1000
+menuitems:
+  - title: الرئيسية
+    link: '#top'
+  - title: من نحن
+    link: '#chi-siamo'
+  - title: خدماتنا
+    link: '#servizi'
+  - title: اتصل بنا
+    link: '#contatti'

@@ -1,9 +1,12 @@
 title: Il Papavero
+hours: Lun - Ven 14:00 - 19:00
 description: >
-  Il Papavero è un'associazione no-profit di promozione sociale, fondata da professionisti del settore educativo. 
+  Il Papavero è un'associazione no-profit di promozione sociale, fondata da professionisti del settore educativo.
   Offre sostegno didattico a tutte le fasce di età e organizza attività culturali, laboratori e corsi di formazione.
 contact:
-  phone: +39 3491792394
+  phones:
+    - +39 3491792394
+    - +39 3345271947
   email: associazioneilpapavero@gmail.com
   address: Piazza Bruno Buozzi 14, 44123 Ferrara
   address_link: https://maps.app.goo.gl/FzCZKT8mwKv38Xea6

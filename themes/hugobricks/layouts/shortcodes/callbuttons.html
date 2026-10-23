@@ -1,0 +1,8 @@
+{{- with (index hugo.Data page.Site.Language.Lang).general.contact.phones -}}
+<span class="call" role="group" aria-label="{{ i18n "callUs" }}"><span class="call-label"><img src="{{ "img/phone.svg" | relURL }}" alt="" /> {{ i18n "callUs" }}</span>
+{{- range . -}}
+{{- $number := strings.TrimPrefix "+39 " . -}}
+<a href="tel:{{ replace . " " "" }}">{{ substr $number 0 3 }} {{ substr $number 3 3 }} {{ substr $number 6 }}</a>
+{{- end -}}
+</span>
+{{- end -}}

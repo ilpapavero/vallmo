@@ -1,9 +1,9 @@
 {{- if or (in (lower .Destination) ".svg") (in (lower .Destination) ".png") -}}
-    <img src="{{ .Destination }}" alt="{{ .Text }}" class="is_svg" />
+    <img src="{{ .Destination | relURL }}" alt="{{ .Text }}" class="is_svg" />
 {{- else -}}
     {{- if (resources.GetMatch .Destination) -}}
         <img src="{{ ((resources.GetMatch .Destination).Fit `1600x1600 jpg Smart q50`).RelPermalink }}" alt="{{ .Text }}" />
     {{- else -}}
-        <img src="{{ .Destination }}" alt="{{ .Text }}" />
+        <img src="{{ .Destination | relURL }}" alt="{{ .Text }}" />
     {{- end -}}        
 {{- end -}}
