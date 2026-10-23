@@ -1,7 +1,12 @@
 {{ $dir := string (.Get "dir") }}
+{{- $photos := slice }}
+{{- range readDir (print "/static" $dir) }}
+  {{- if findRE `(?i)\.(jpe?g|png|webp)$` .Name }}{{ $photos = $photos | append . }}{{ end }}
+{{- end }}
+{{- with $photos }}
 <div class="carousel" aria-roledescription="{{ i18n "carousel" }}" aria-label="{{ i18n "photos" }}">
   <ul class="carousel-track" tabindex="0">
-  {{ range $index, $file := (readDir (print "/static" $dir)) }}
+  {{ range $index, $file := . }}
     {{- $image := resources.Get (printf "%s/%s" $dir .Name) -}}
       <li>
         <a href="{{ ($image.Fit "1600x1600 Center q50").RelPermalink }}">
@@ -17,3 +22,4 @@
   </div>
 </div>
 <script src="{{ "js/carousel.js" | relURL }}" defer></script>
+{{- end }}

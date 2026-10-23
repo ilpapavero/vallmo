@@ -552,10 +552,10 @@ a[href^="tel:"] {
     letter-spacing: 0;
 }
 [dir="rtl"] header > .container > div:first-child,
-[dir="rtl"] footer .container > div:first-child {
+[dir="rtl"] footer .container > div:first-child:not(:only-child) {
     text-align: right;
 }
-[dir="rtl"] footer .container > div:last-child {
+[dir="rtl"] footer .container > div:last-child:not(:only-child) {
     text-align: left;
 }
 [dir="rtl"] body.mobilemenu header nav > ul {

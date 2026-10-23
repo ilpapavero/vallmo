@@ -6,3 +6,6 @@ resources
 public/
 sandbox/
 git-do*
+# Gallery photos come from Dropbox (make photos)
+static/uploads/gallery/*
+!static/uploads/gallery/.gitkeep
