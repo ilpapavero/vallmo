@@ -31,6 +31,8 @@ We organise cultural activities, workshops, social gatherings and courses for yo
 
 {{< brick_about >}}
 {{< gallery dir="/uploads/gallery" >}}
+
+<a href="https://instagram.com/associazioneilpapavero" target="_blank" rel="noopener" class="button ghost">Follow us on Instagram</a>
 {{< /brick_about >}}
 
 

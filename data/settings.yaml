@@ -1,4 +1,11 @@
 favicon_image: uploads/branding/favicon.ico
+share_image: uploads/photos/people.jpeg
+address:
+  street: Piazza Bruno Buozzi 14
+  postal_code: "44123"
+  city: Ferrara
+  region: FE
+  country: IT
 sticky_header: true
 customcursor: false
 intersectionobserver: false

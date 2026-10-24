@@ -31,6 +31,8 @@ Organizziamo attività culturali, laboratori, momenti di aggregazione e corsi ri
 
 {{< brick_about >}}
 {{< gallery dir="/uploads/gallery" >}}
+
+<a href="https://instagram.com/associazioneilpapavero" target="_blank" rel="noopener" class="button ghost">Seguici su Instagram</a>
 {{< /brick_about >}}
 
 

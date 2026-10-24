@@ -31,6 +31,8 @@ Il Papavero جمعية غير ربحية للنهوض الاجتماعي، أس�
 
 {{< brick_about >}}
 {{< gallery dir="/uploads/gallery" >}}
+
+<a href="https://instagram.com/associazioneilpapavero" target="_blank" rel="noopener" class="button ghost">تابعونا على إنستغرام</a>
 {{< /brick_about >}}
 
 
