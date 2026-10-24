@@ -1,0 +1,12 @@
+logo_image: uploads/branding/logo_long.png
+logo_subtitle: Association for Social Promotion
+mobile_view_width: 1000
+menuitems:
+  - title: Home
+    link: '#top'
+  - title: About us
+    link: '#chi-siamo'
+  - title: Services
+    link: '#servizi'
+  - title: Contact
+    link: '#contatti'

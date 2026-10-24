@@ -1,52 +1,78 @@
 <!DOCTYPE html>
-<html lang="{{ .Language.Lang }}">
+<html lang="{{ .Language.Lang }}" dir="{{ .Language.Direction | default "ltr" }}">
   <head>
-    <title>{{ if .Params.seo.title }}{{ .Params.seo.title }}{{ else }}{{ .Title }} | {{ (index .Site.Data .Language.Lang).general.title }} {{ (index .Site.Data .Language.Lang).header.logo_subtitle }}{{ end }}</title>
+    <title>{{ if .Params.seo.title }}{{ .Params.seo.title }}{{ else }}{{ if eq .Kind "404" }}{{ with site.GetPage "/notfound" }}{{ .Title }}{{ end }}{{ else }}{{ .Title }}{{ end }} | {{ (index hugo.Data .Language.Lang).general.title }} {{ (index hugo.Data .Language.Lang).header.logo_subtitle }}{{ end }}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{{ if .Params.seo.description }}{{ .Params.seo.description }}{{ else }}{{ .Summary }}{{ end }}">
+    <meta name="description" content="{{ if .Params.seo.description }}{{ .Params.seo.description }}{{ else if .IsHome }}{{ strings.TrimSpace (index hugo.Data .Language.Lang).general.description }}{{ else }}{{ .Summary }}{{ end }}">
 
     <link rel="canonical" href="{{ .Permalink }}" />
-    <link rel="shortcut icon" href="{{ .Site.Data.settings.favicon_image }}">
+    {{- range .AllTranslations }}
+    <link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}" />
+    {{- end }}
+    <link rel="shortcut icon" href="{{ hugo.Data.settings.favicon_image | relURL }}">
     
-    <link href="css/style.css?version={{ now }}" rel="stylesheet">
+    <link href="{{ "css/style.css" | relURL }}?version={{ now }}" rel="stylesheet">
+    <script>
+      (function () {
+        var media = window.matchMedia('(prefers-color-scheme: dark)');
+        function apply(theme) { document.documentElement.dataset.theme = theme; }
+        apply(localStorage.getItem('theme') || (media.matches ? 'dark' : 'light'));
+        media.addEventListener('change', function (e) {
+          if (!localStorage.getItem('theme')) apply(e.matches ? 'dark' : 'light');
+        });
+        window.toggleTheme = function () {
+          var theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+          localStorage.setItem('theme', theme);
+          apply(theme);
+        };
+      })();
+    </script>
   </head>
   <body id="top" class="{{ if in (substr .Content  0 100) `transparent_header` }}transparent_header{{ end }} filename_{{ with .File }}{{ .BaseFileName }}{{ end }}">
     <script>      
       function updateSize() {
-        if(window.innerWidth<{{ (index .Site.Data .Language.Lang).header.mobile_view_width }}) document.body.classList.add('mobilemenu');
+        if(window.innerWidth<{{ (index hugo.Data .Language.Lang).header.mobile_view_width }}) document.body.classList.add('mobilemenu');
         else document.body.classList.remove('mobilemenu');
       }
       updateSize();
       window.addEventListener("resize", updateSize);
     </script>
     <div class="innerbody">
-    {{- if .Site.Data.settings.preheader.active -}}
-    <div class="preheader{{ if .Site.Data.settings.preheader.is_light }} light{{- end -}}">
+    {{- if hugo.Data.settings.preheader.active -}}
+    <div class="preheader{{ if hugo.Data.settings.preheader.is_light }} light{{- end -}}" dir="ltr">
       <div class="container">
         <div class="icons">
-          {{- if (index .Site.Data .Language.Lang).general.contact.phone -}}
-            <a href="tel:{{ replace (index .Site.Data .Language.Lang).general.contact.phone ` ` `` }}" class="icon"><img src="img/phone.svg" alt="{{ (index .Site.Data .Language.Lang).general.contact.phone }}" class="black_2_textMedium" /> {{ (index .Site.Data .Language.Lang).general.contact.phone }}</a>
+          {{- range (index hugo.Data .Language.Lang).general.contact.phones -}}
+            <a href="tel:{{ replace . ` ` `` }}" class="icon"><img src="{{ "img/phone.svg" | relURL }}" alt="{{ . }}" class="black_2_textMedium" /> {{ . }}</a>
           {{- end -}}
-          {{- if (index .Site.Data .Language.Lang).general.contact.email -}}
-            <a href="mailto:{{ (index .Site.Data .Language.Lang).general.contact.email }}" class="icon"><img src="img/email.svg" alt="{{ (index .Site.Data .Language.Lang).general.contact.email }}" class="black_2_textMedium" /> {{ (index .Site.Data .Language.Lang).general.contact.email }}</a>
+          {{- if (index hugo.Data .Language.Lang).general.contact.email -}}
+            <a href="mailto:{{ (index hugo.Data .Language.Lang).general.contact.email }}" class="icon"><img src="{{ "img/email.svg" | relURL }}" alt="{{ (index hugo.Data .Language.Lang).general.contact.email }}" class="black_2_textMedium" /> {{ (index hugo.Data .Language.Lang).general.contact.email }}</a>
           {{- end -}}
         </div>
-        <div>
-          {{- if .Site.Data.settings.preheader.text -}}{{ .Site.Data.settings.preheader.text }}{{- end -}}
+        <div class="preheader-end">
+          {{- with (index hugo.Data .Language.Lang).general.hours -}}<span class="hours" dir="auto">{{ . }}</span>{{- end -}}
+          {{- if .IsTranslated -}}
+          <nav class="languages" aria-label="{{ i18n "language" }}">
+            {{- range .AllTranslations -}}
+            <a href="{{ .RelPermalink }}" hreflang="{{ .Language.Lang }}" lang="{{ .Language.Lang }}"{{ if eq .Language.Lang $.Language.Lang }} aria-current="page"{{ end }}>{{ .Language.Label }}</a>
+            {{- end -}}
+          </nav>
+          {{- end -}}
+          <button type="button" class="theme-toggle" onclick="toggleTheme()" aria-label="{{ i18n "toggleTheme" }}" title="{{ i18n "toggleTheme" }}"></button>
         </div>
       </div>  
     </div>
     {{- end -}}
     <header>
-      <div class="container {{ if (index .Site.Data .Language.Lang).header.cta.active }}has_cta{{ end }}">
+      <div class="container {{ if (index hugo.Data .Language.Lang).header.cta.active }}has_cta{{ end }}">
         <div>
           {{ partial "logo.html" . }}
         </div>
         <div class="nav">
           <nav>
             <ul>
-              {{ range (index .Site.Data .Language.Lang).header.menuitems }}
+              {{ range (index hugo.Data .Language.Lang).header.menuitems }}
                 <li class="{{ if eq .link `/` }}{{ if eq $.RelPermalink `/` }}active{{ end }}{{ else }}{{ if in $.RelPermalink .link }}active{{ end }}{{ end }}{{ if (index .items 0).title }} haschildren{{ end }}"><a href="{{ .link }}">{{ .title }}</a>
                   {{ if (index .items 0).title }}
                   <ul>
@@ -60,17 +86,17 @@
             </ul>
           </nav>
         </div>
-        {{ if (index .Site.Data .Language.Lang).header.cta.active }}
+        {{ if (index hugo.Data .Language.Lang).header.cta.active }}
         <div>
-          <a href="{{ (index .Site.Data .Language.Lang).header.cta.link }}" class="button ghost smaller">{{ (index .Site.Data .Language.Lang).header.cta.title }}</a>
+          <a href="{{ (index hugo.Data .Language.Lang).header.cta.link }}" class="button ghost smaller">{{ (index hugo.Data .Language.Lang).header.cta.title }}</a>
         </div>
         {{ end }}
-        <button id="togglemenu" onclick="document.body.classList.toggle('menushown');">Toggle menu</button>
+        <button id="togglemenu" onclick="document.body.classList.toggle('menushown');">{{ i18n "toggleMenu" }}</button>
     </header>
 
     {{- block "content" . -}}{{- end -}}
 
-    <footer class="{{ if (index .Site.Data .Language.Lang).footer.dark_footer }}dark{{ end }}">
+    <footer class="{{ if (index hugo.Data .Language.Lang).footer.dark_footer }}dark{{ end }}">
       <div>
         <div class="container">
           <div>
@@ -78,7 +104,7 @@
           </div>
           <div>
             <ul>
-              {{ range (index .Site.Data .Language.Lang).footer.menuitems }}
+              {{ range (index hugo.Data .Language.Lang).footer.menuitems }}
                 <li><a href="{{ .link }}">{{ .title }}</a></li>
               {{ end }}
             </ul>  
@@ -90,24 +116,24 @@
       </div>
       <div>
         <div class="container">
-		      <div>{{ markdownify (index .Site.Data .Language.Lang).footer.footer_text }}</div>
+		      <div>{{ markdownify (index hugo.Data .Language.Lang).footer.footer_text }}</div>
 		    </div>
   		</div>
 		</footer>
 
-		{{ if .Site.Data.settings.sticky_header }}
-      <script type="text/javascript" src="js/stickyheader.js"></script>
+		{{ if hugo.Data.settings.sticky_header }}
+      <script type="text/javascript" src="{{ "js/stickyheader.js" | relURL }}"></script>
     {{ end }}
-    <script type="text/javascript" src="js/faq.js"></script>
-    <script type="text/javascript" src="js/lightbox.js"></script>
-		<link rel="stylesheet" href="css/lightbox.css">
-    {{ if .Site.Data.settings.customcursor }}
-      <script type="text/javascript" src="js/customcursor.js"></script>
-      <link rel="stylesheet" href="css/customcursor.css">
+    <script type="text/javascript" src="{{ "js/faq.js" | relURL }}"></script>
+    <script type="text/javascript" src="{{ "js/lightbox.js" | relURL }}"></script>
+		<link rel="stylesheet" href="{{ "css/lightbox.css" | relURL }}">
+    {{ if hugo.Data.settings.customcursor }}
+      <script type="text/javascript" src="{{ "js/customcursor.js" | relURL }}"></script>
+      <link rel="stylesheet" href="{{ "css/customcursor.css" | relURL }}">
     {{ end }}
-    {{ if .Site.Data.settings.intersectionobserver }}
-      <script type="text/javascript" src="js/intersectionobserver.js"></script>
-      <link rel="stylesheet" href="css/intersectionobserver.css">
+    {{ if hugo.Data.settings.intersectionobserver }}
+      <script type="text/javascript" src="{{ "js/intersectionobserver.js" | relURL }}"></script>
+      <link rel="stylesheet" href="{{ "css/intersectionobserver.css" | relURL }}">
     {{ end }}
       </div>
   </body>

@@ -1,13 +1,25 @@
 {{ $dir := string (.Get "dir") }}
-<ul class="image-gallery">
-{{ range (readDir (print "/static" $dir)) }}
-  {{- $image := resources.Get (printf "%s/%s" $dir .Name) -}}
-  {{- $imageurl := printf "%s/%s" $dir .Name -}}
-  {{- $imagetitle := index (split .Name ".") 0 -}}
-    <li>
-      <a href="{{ ($image.Fit "1600x1600 Center q50").Permalink }}">
-        <img src="{{ ($image.Fill "300x300 Center q50").Permalink }}" alt="Image {{ $imagetitle }}" />
-      </a>
-    </li>
-{{ end }}
-</ul>
+{{- $photos := slice }}
+{{- range readDir (print "/static" $dir) }}
+  {{- if findRE `(?i)\.(jpe?g|png|webp)$` .Name }}{{ $photos = $photos | append . }}{{ end }}
+{{- end }}
+{{- with $photos }}
+<div class="carousel" aria-roledescription="{{ i18n "carousel" }}" aria-label="{{ i18n "photos" }}">
+  <ul class="carousel-track" tabindex="0">
+  {{ range $index, $file := . }}
+    {{- $image := resources.Get (printf "%s/%s" $dir .Name) -}}
+      <li>
+        <a href="{{ ($image.Fit "1600x1600 Center q50").RelPermalink }}">
+          <img src="{{ ($image.Fill "800x800 Center q50").RelPermalink }}" alt="{{ i18n "photo" }} {{ add $index 1 }}" loading="lazy" />
+        </a>
+      </li>
+  {{ end }}
+  </ul>
+  <div class="carousel-controls">
+    <button type="button" class="carousel-toggle" data-pause="{{ i18n "pause" }}" data-resume="{{ i18n "resume" }}" aria-label="{{ i18n "pause" }}" title="{{ i18n "pause" }}"></button>
+    <button type="button" class="carousel-prev" aria-label="{{ i18n "previousPhoto" }}">&lsaquo;</button>
+    <button type="button" class="carousel-next" aria-label="{{ i18n "nextPhoto" }}">&rsaquo;</button>
+  </div>
+</div>
+<script src="{{ "js/carousel.js" | relURL }}" defer></script>
+{{- end }}

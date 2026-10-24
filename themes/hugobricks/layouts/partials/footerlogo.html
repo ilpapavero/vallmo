@@ -1,12 +1,12 @@
 <a href="{{ relLangURL "" }}#top" class="logo">
-    {{ if (index .Site.Data .Language.Lang).footer.logo_image }}
-        <img src="{{ (index .Site.Data .Language.Lang).footer.logo_image }}" alt="{{ (index .Site.Data .Language.Lang).general.title }} logo" />
+    {{ if (index hugo.Data .Language.Lang).footer.logo_image }}
+        <img src="{{ (index hugo.Data .Language.Lang).footer.logo_image | relURL }}" alt="{{ i18n "logo" }} {{ (index hugo.Data .Language.Lang).general.title }}" />
     {{ else }}
-        <div class="{{ if (index .Site.Data .Language.Lang).header.logo_subtitle }}has_subtitle{{ end}}">
-            <img src="{{ .Site.Data.settings.favicon_image }}" alt="{{ (index .Site.Data .Language.Lang).general.title }} logo" class="inline black_2_textDark" />
+        <div class="{{ if (index hugo.Data .Language.Lang).header.logo_subtitle }}has_subtitle{{ end}}">
+            <img src="{{ hugo.Data.settings.favicon_image | relURL }}" alt="{{ i18n "logo" }} {{ (index hugo.Data .Language.Lang).general.title }}" class="inline black_2_textDark" />
             <div>
-                <span>{{ (index .Site.Data .Language.Lang).general.title }}</span>
-                {{ if (index .Site.Data .Language.Lang).header.logo_subtitle }}<span>{{ (index .Site.Data .Language.Lang).header.logo_subtitle }}</span>{{ end }}
+                <span>{{ (index hugo.Data .Language.Lang).general.title }}</span>
+                {{ if (index hugo.Data .Language.Lang).header.logo_subtitle }}<span>{{ (index hugo.Data .Language.Lang).header.logo_subtitle }}</span>{{ end }}
             </div>
         </div>
     {{ end }}

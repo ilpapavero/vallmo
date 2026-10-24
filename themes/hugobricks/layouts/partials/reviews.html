@@ -1,22 +1,24 @@
 <!-- load reviews from data folder and display them ein a ul -->
 <ul class="grid reviews">
-{{- range (index page.Site.Data page.Site.Language.Lang).reviews -}}
+{{- range (index hugo.Data page.Site.Language.Lang).reviews -}}
     <li>
         <div class="box">
             <div>
-                <img src="{{ if (resources.GetMatch .image ) }}{{ ((resources.GetMatch .image).Fit `200x200 jpg Smart q50`).RelPermalink | safeURL }}{{ else }}img/icons/material-symbols/200/rounded/account_circle-fill.svg{{ end }}" alt="{{ .name }} image" class="avatar colorize_image">
+                {{- if .image }}
+                <img src="{{ if (resources.GetMatch .image ) }}{{ ((resources.GetMatch .image).Fit `200x200 jpg Smart q50`).RelPermalink | safeURL }}{{ else }}{{ "img/icons/material-symbols/200/rounded/account_circle-fill.svg" | relURL }}{{ end }}" alt="{{ .name }}" class="avatar colorize_image">
+                {{- end }}
                 <div>
-                    <h3>{{ .name }}</h3>
+                    <h3 dir="auto">{{ .name }}</h3>
                     <div class="function">{{ .function }}</div>
                 </div>
             </div>
             <div>
-                <div class="stars">
-                    <img src="img/star.svg" alt="star" class="black_2_accent" />
-                    <img src="img/star.svg" alt="star" class="black_2_accent" />
-                    <img src="img/star.svg" alt="star" class="black_2_accent" />
-                    <img src="img/star.svg" alt="star" class="black_2_accent" />
-                    <img src="img/star.svg" alt="star" class="black_2_accent" />
+                <div class="stars" role="img" aria-label="{{ i18n "fiveStars" }}">
+                    <img src="{{ "img/star.svg" | relURL }}" alt="" class="black_2_accent" />
+                    <img src="{{ "img/star.svg" | relURL }}" alt="" class="black_2_accent" />
+                    <img src="{{ "img/star.svg" | relURL }}" alt="" class="black_2_accent" />
+                    <img src="{{ "img/star.svg" | relURL }}" alt="" class="black_2_accent" />
+                    <img src="{{ "img/star.svg" | relURL }}" alt="" class="black_2_accent" />
                 </div>
                 <p>{{ .description }}</p>
             </div>

@@ -10,7 +10,16 @@ markup:
 
 languages:
   it:
-    languageName: Italiano
+    label: Italiano
     contentDir: content/it
     weight: 1
     disabled: false
+  en:
+    label: English
+    contentDir: content/en
+    weight: 2
+  ar:
+    label: العربية
+    contentDir: content/ar
+    weight: 3
+    direction: rtl
